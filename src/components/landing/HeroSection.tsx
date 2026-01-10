@@ -1,4 +1,5 @@
 import { ArrowRight, ChevronDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useInView } from '@/hooks/useInView';
 import { cn } from '@/lib/utils';
@@ -63,7 +64,7 @@ function AnomalyCard({
   return (
     <div
       className={cn(
-        "absolute glass-card p-3 min-w-[140px] animate-float",
+        "absolute glass-card p-3 min-w-[140px] animate-float cursor-pointer hover:scale-105 transition-transform",
         statusColors[status],
         className
       )}
@@ -80,12 +81,17 @@ function AnomalyCard({
 
 export function HeroSection() {
   const [ref, isInView] = useInView<HTMLElement>({ threshold: 0.2 });
+  const navigate = useNavigate();
 
   const scrollToFeatures = () => {
     const element = document.querySelector('#features');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const goToDashboard = () => {
+    navigate('/dashboard');
   };
 
   return (
@@ -183,14 +189,9 @@ export function HeroSection() {
           >
             <Button
               size="lg"
-              onClick={() => {
-                const analysisSection = document.querySelector('#analysis');
-                if (analysisSection) {
-                  analysisSection.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
+              onClick={goToDashboard}
               className={cn(
-                "text-base px-8 py-6 glow-primary transition-all duration-300 group relative overflow-hidden",
+                "text-base px-8 py-6 glow-primary transition-all duration-300 group relative overflow-hidden cursor-pointer",
                 "hover:scale-105 hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)]",
                 "before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent",
                 "before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700"
@@ -205,7 +206,7 @@ export function HeroSection() {
               size="lg"
               variant="outline"
               onClick={scrollToFeatures}
-              className="text-base px-8 py-6 hover:bg-secondary/50 hover:border-primary/50 hover:scale-105 transition-all duration-300"
+              className="text-base px-8 py-6 hover:bg-secondary/50 hover:border-primary/50 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               View Sample Insights
             </Button>

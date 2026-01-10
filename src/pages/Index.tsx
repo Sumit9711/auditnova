@@ -10,7 +10,6 @@ import { FAQSection } from '@/components/landing/FAQSection';
 import { ImplementationSection } from '@/components/landing/ImplementationSection';
 import { ContactSection } from '@/components/landing/ContactSection';
 import { Footer } from '@/components/landing/Footer';
-import { AnalysisSection } from '@/components/dashboard/AnalysisSection';
 import { useEmailAuth } from '@/hooks/useEmailAuth';
 
 interface IndexProps {
@@ -21,12 +20,11 @@ const Index = ({ onSignOut }: IndexProps) => {
   const { user } = useEmailAuth();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background landing-cursor-pointer">
       <Navbar user={user} onSignOut={onSignOut} />
       
       <main>
         <HeroSection />
-        <AnalysisSection />
         <FeaturesSection />
         <UseCasesSection />
         <HowItWorksSection />
