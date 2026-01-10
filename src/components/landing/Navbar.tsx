@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Shield, Sun, Moon, Menu, X, ChevronDown, User, LogOut } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/hooks/useTheme';
 import { EmailUser } from '@/hooks/useEmailAuth';
@@ -20,6 +21,7 @@ const navLinks = [
 
 export function Navbar({ user, onSignOut }: NavbarProps) {
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -41,11 +43,8 @@ export function Navbar({ user, onSignOut }: NavbarProps) {
     }
   };
 
-  const scrollToAnalysis = () => {
-    const element = document.querySelector('#analysis');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const goToDashboard = () => {
+    navigate('/dashboard');
   };
 
   return (
@@ -99,13 +98,13 @@ export function Navbar({ user, onSignOut }: NavbarProps) {
           <div className="hidden md:flex items-center gap-3">
             {/* Use AI to Analyze Button */}
             <Button
-              onClick={scrollToAnalysis}
+              onClick={goToDashboard}
               variant="outline"
               size="sm"
               className={cn(
-                "text-primary border-primary/50 hover:bg-primary/10 relative overflow-hidden group",
+                "text-primary border-primary/50 hover:bg-primary/10 relative overflow-hidden group cursor-pointer",
                 "hover:border-primary hover:shadow-[0_0_15px_hsl(var(--primary)/0.3)]",
-                "transition-all duration-300"
+                "transition-all duration-300 hover:scale-105"
               )}
             >
               <span className="relative z-10 flex items-center gap-2">

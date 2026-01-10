@@ -1,4 +1,13 @@
 @tailwind base;
+
+/* Global cursor pointer for interactive elements on landing page */
+.landing-cursor-pointer a,
+.landing-cursor-pointer button,
+.landing-cursor-pointer [role="button"],
+.landing-cursor-pointer .glass-card,
+.landing-cursor-pointer .hover-glow {
+  cursor: pointer;
+}
 @tailwind components;
 @tailwind utilities;
 
