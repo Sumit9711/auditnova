@@ -13,8 +13,8 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Google OAuth Client ID - Replace with your own
-const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
+// Google OAuth Client ID from environment variable
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
 
 function AppContent() {
   const { user, isAuthenticated, isLoading, handleGoogleSuccess, handleGoogleError, signOut } = useGoogleAuth();
