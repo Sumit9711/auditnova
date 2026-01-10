@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useInView } from '@/hooks/useInView';
@@ -83,12 +83,6 @@ export function HeroSection() {
   const [ref, isInView] = useInView<HTMLElement>({ threshold: 0.2 });
   const navigate = useNavigate();
 
-  const scrollToFeatures = () => {
-    const element = document.querySelector('#features');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   const goToDashboard = () => {
     navigate('/dashboard');
@@ -205,7 +199,10 @@ export function HeroSection() {
             <Button
               size="lg"
               variant="outline"
-              onClick={scrollToFeatures}
+              onClick={() => {
+                const element = document.querySelector('#features');
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="text-base px-8 py-6 hover:bg-secondary/50 hover:border-primary/50 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               View Sample Insights
@@ -235,19 +232,6 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll Indicator - Fixed positioning with proper z-index */}
-      <div
-        className={cn(
-          "absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-20",
-          "bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full border border-border/50",
-          "transition-all duration-700 delay-700 hover:border-primary/50 hover:bg-background/90 cursor-pointer",
-          isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-        )}
-        onClick={scrollToFeatures}
-      >
-        <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Scroll to explore</span>
-        <ChevronDown className="h-4 w-4 md:h-5 md:w-5 text-primary animate-bounce-slow" />
-      </div>
     </section>
   );
 }
