@@ -1,32 +1,28 @@
 import { useState, useCallback } from 'react';
-import { GoogleOAuthProvider, CredentialResponse } from '@react-oauth/google';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useGoogleAuth } from '@/hooks/useGoogleAuth';
-import { GoogleAuthScreen } from '@/components/auth/GoogleAuthScreen';
+import { useEmailAuth } from '@/hooks/useEmailAuth';
+import { EmailAuthScreen } from '@/components/auth/EmailAuthScreen';
 import { LoadingScreen } from '@/components/auth/LoadingScreen';
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Google OAuth Client ID from environment variable
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
-
 function AppContent() {
-  const { user, isAuthenticated, isLoading, handleGoogleSuccess, handleGoogleError, signOut } = useGoogleAuth();
+  const { user, isAuthenticated, isLoading, signIn, signOut } = useEmailAuth();
   const [showLoadingScreen, setShowLoadingScreen] = useState(false);
   const [hasCompletedLoading, setHasCompletedLoading] = useState(false);
 
-  const onGoogleSuccess = useCallback((credentialResponse: CredentialResponse) => {
-    const result = handleGoogleSuccess(credentialResponse);
+  const onEmailSubmit = useCallback((email: string) => {
+    const result = signIn(email);
     if (result.success) {
       setShowLoadingScreen(true);
     }
-  }, [handleGoogleSuccess]);
+  }, [signIn]);
 
   const onLoadingComplete = useCallback(() => {
     setShowLoadingScreen(false);
@@ -57,14 +53,9 @@ function AppContent() {
     return <LoadingScreen onComplete={onLoadingComplete} />;
   }
 
-  // Not authenticated - show Google sign-in
+  // Not authenticated - show email sign-in
   if (!isAuthenticated) {
-    return (
-      <GoogleAuthScreen
-        onSuccess={onGoogleSuccess}
-        onError={handleGoogleError}
-      />
-    );
+    return <EmailAuthScreen onSubmit={onEmailSubmit} />;
   }
 
   // Authenticated and loading complete - show main app
@@ -79,15 +70,13 @@ function AppContent() {
 }
 
 const App = () => (
-  <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <AppContent />
-      </TooltipProvider>
-    </QueryClientProvider>
-  </GoogleOAuthProvider>
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <AppContent />
+    </TooltipProvider>
+  </QueryClientProvider>
 );
 
 export default App;
