@@ -11,9 +11,9 @@ interface NavbarProps {
 
 const navLinks = [
   { label: 'Product', href: '#features' },
-  { label: 'Use Cases', href: '#use-cases' },
+  { label: 'Pricing', href: '#pricing' },
   { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Docs', href: '#faq' },
+  { label: 'Security', href: '#security' },
 ];
 
 export function Navbar({ onSignInClick }: NavbarProps) {
