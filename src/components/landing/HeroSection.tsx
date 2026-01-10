@@ -189,16 +189,23 @@ export function HeroSection() {
                   analysisSection.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className="text-base px-8 py-6 glow-primary hover:scale-105 transition-all duration-300 group"
+              className={cn(
+                "text-base px-8 py-6 glow-primary transition-all duration-300 group relative overflow-hidden",
+                "hover:scale-105 hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)]",
+                "before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent",
+                "before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700"
+              )}
             >
-              Start Analysis
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
+              <span className="relative z-10 flex items-center">
+                Start Analyzing
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
+              </span>
             </Button>
             <Button
               size="lg"
               variant="outline"
               onClick={scrollToFeatures}
-              className="text-base px-8 py-6 hover:bg-secondary/50 transition-all duration-300"
+              className="text-base px-8 py-6 hover:bg-secondary/50 hover:border-primary/50 hover:scale-105 transition-all duration-300"
             >
               View Sample Insights
             </Button>
@@ -227,15 +234,18 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator - Fixed positioning with proper z-index */}
       <div
         className={cn(
-          "absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-700 delay-700",
-          isInView ? "opacity-100" : "opacity-0"
+          "absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-20",
+          "bg-background/80 backdrop-blur-sm px-4 py-2 rounded-full border border-border/50",
+          "transition-all duration-700 delay-700 hover:border-primary/50 hover:bg-background/90 cursor-pointer",
+          isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
         )}
+        onClick={scrollToFeatures}
       >
-        <span className="text-sm text-muted-foreground">Scroll to explore</span>
-        <ChevronDown className="h-5 w-5 text-muted-foreground animate-bounce-slow" />
+        <span className="text-xs md:text-sm text-muted-foreground whitespace-nowrap">Scroll to explore</span>
+        <ChevronDown className="h-4 w-4 md:h-5 md:w-5 text-primary animate-bounce-slow" />
       </div>
     </section>
   );

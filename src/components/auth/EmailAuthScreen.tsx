@@ -43,15 +43,18 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Animated background */}
+      {/* Animated background - Enhanced */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-3xl" />
+        {/* Gradient orbs with enhanced animation */}
+        <div className="absolute top-1/4 left-1/4 w-72 md:w-96 h-72 md:h-96 bg-primary/15 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-72 md:w-96 h-72 md:h-96 bg-accent/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-secondary/5 rounded-full blur-3xl" />
+        <div className="absolute top-[10%] right-[10%] w-48 h-48 bg-purple/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute bottom-[20%] left-[15%] w-64 h-64 bg-emerald/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
         
-        {/* Grid pattern */}
+        {/* Animated grid pattern */}
         <div 
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute inset-0 opacity-[0.04]"
           style={{
             backgroundImage: `linear-gradient(hsl(var(--primary) / 0.3) 1px, transparent 1px),
                              linear-gradient(90deg, hsl(var(--primary) / 0.3) 1px, transparent 1px)`,
@@ -59,16 +62,53 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
           }}
         />
 
-        {/* Floating orbs */}
-        {[...Array(6)].map((_, i) => (
+        {/* Floating geometric shapes */}
+        <div className="absolute top-[15%] left-[10%] w-16 h-16 border border-primary/20 rounded-lg rotate-45 animate-float" style={{ animationDelay: '0s' }} />
+        <div className="absolute top-[60%] right-[8%] w-12 h-12 border border-accent/20 rounded-full animate-float" style={{ animationDelay: '1.5s' }} />
+        <div className="absolute bottom-[25%] left-[20%] w-8 h-8 bg-primary/10 rounded-full animate-pulse-slow" />
+        <div className="absolute top-[40%] right-[15%] w-20 h-20 border border-purple/15 rounded-xl rotate-12 animate-float" style={{ animationDelay: '2.5s' }} />
+        
+        {/* Floating connection lines */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+          <line x1="10%" y1="20%" x2="25%" y2="35%" stroke="hsl(var(--primary))" strokeWidth="1" className="animate-pulse">
+            <animate attributeName="opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite" />
+          </line>
+          <line x1="75%" y1="15%" x2="85%" y2="30%" stroke="hsl(var(--accent))" strokeWidth="1">
+            <animate attributeName="opacity" values="0.3;0.6;0.3" dur="4s" repeatCount="indefinite" />
+          </line>
+          <line x1="20%" y1="70%" x2="35%" y2="85%" stroke="hsl(var(--purple))" strokeWidth="1">
+            <animate attributeName="opacity" values="0.2;0.4;0.2" dur="3.5s" repeatCount="indefinite" />
+          </line>
+        </svg>
+
+        {/* Floating orbs with varied sizes */}
+        {[...Array(10)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-primary/40 rounded-full animate-float"
+            className={cn(
+              "absolute rounded-full animate-float",
+              i % 3 === 0 ? "w-3 h-3 bg-primary/30" : i % 3 === 1 ? "w-2 h-2 bg-accent/40" : "w-1.5 h-1.5 bg-purple/30"
+            )}
             style={{
-              left: `${15 + i * 15}%`,
-              top: `${20 + (i % 3) * 25}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${4 + i}s`,
+              left: `${5 + i * 10}%`,
+              top: `${15 + (i % 5) * 18}%`,
+              animationDelay: `${i * 0.3}s`,
+              animationDuration: `${3 + i * 0.5}s`,
+            }}
+          />
+        ))}
+        
+        {/* Glowing dots */}
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={`glow-${i}`}
+            className="absolute w-1 h-1 bg-primary rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              boxShadow: '0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary))',
+              animation: `pulse ${2 + Math.random() * 2}s infinite`,
+              animationDelay: `${Math.random() * 2}s`,
             }}
           />
         ))}
