@@ -3,10 +3,6 @@ import { Button } from '@/components/ui/button';
 import { useInView } from '@/hooks/useInView';
 import { cn } from '@/lib/utils';
 
-interface HeroSectionProps {
-  onLaunchDashboard: () => void;
-}
-
 // Animated network node component
 function NetworkNode({ className, delay = 0 }: { className?: string; delay?: number }) {
   return (
@@ -82,7 +78,7 @@ function AnomalyCard({
   );
 }
 
-export function HeroSection({ onLaunchDashboard }: HeroSectionProps) {
+export function HeroSection() {
   const [ref, isInView] = useInView<HTMLElement>({ threshold: 0.2 });
 
   const scrollToFeatures = () => {
@@ -187,10 +183,15 @@ export function HeroSection({ onLaunchDashboard }: HeroSectionProps) {
           >
             <Button
               size="lg"
-              onClick={onLaunchDashboard}
+              onClick={() => {
+                const analysisSection = document.querySelector('#analysis');
+                if (analysisSection) {
+                  analysisSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
               className="text-base px-8 py-6 glow-primary hover:scale-105 transition-all duration-300 group"
             >
-              Launch Analytics Dashboard
+              Start Analysis
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
             </Button>
             <Button
@@ -199,7 +200,7 @@ export function HeroSection({ onLaunchDashboard }: HeroSectionProps) {
               onClick={scrollToFeatures}
               className="text-base px-8 py-6 hover:bg-secondary/50 transition-all duration-300"
             >
-              Explore Features
+              View Sample Insights
             </Button>
           </div>
 

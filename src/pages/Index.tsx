@@ -1,52 +1,42 @@
-import { useState } from 'react';
 import { Navbar } from '@/components/landing/Navbar';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { FeaturesSection } from '@/components/landing/FeaturesSection';
 import { UseCasesSection } from '@/components/landing/UseCasesSection';
 import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
-import { PricingSection } from '@/components/landing/PricingSection';
 import { TestimonialsSection } from '@/components/landing/TestimonialsSection';
 import { WhyItMattersSection } from '@/components/landing/WhyItMattersSection';
 import { SecuritySection } from '@/components/landing/SecuritySection';
-import { ROICalculatorSection } from '@/components/landing/ROICalculatorSection';
 import { FAQSection } from '@/components/landing/FAQSection';
 import { ImplementationSection } from '@/components/landing/ImplementationSection';
 import { ContactSection } from '@/components/landing/ContactSection';
 import { Footer } from '@/components/landing/Footer';
-import { AuthModal } from '@/components/auth/AuthModal';
+import { useGoogleAuth } from '@/hooks/useGoogleAuth';
 
-const Index = () => {
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+interface IndexProps {
+  onSignOut: () => void;
+}
 
-  const handleLaunchDashboard = () => {
-    setIsAuthModalOpen(true);
-  };
+const Index = ({ onSignOut }: IndexProps) => {
+  const { user } = useGoogleAuth();
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar onSignInClick={() => setIsAuthModalOpen(true)} />
+      <Navbar user={user} onSignOut={onSignOut} />
       
       <main>
-        <HeroSection onLaunchDashboard={handleLaunchDashboard} />
+        <HeroSection />
         <FeaturesSection />
         <UseCasesSection />
         <HowItWorksSection />
-        <PricingSection />
         <TestimonialsSection />
         <WhyItMattersSection />
         <SecuritySection />
-        <ROICalculatorSection />
         <FAQSection />
         <ImplementationSection />
         <ContactSection />
       </main>
 
       <Footer />
-
-      <AuthModal 
-        isOpen={isAuthModalOpen} 
-        onClose={() => setIsAuthModalOpen(false)} 
-      />
     </div>
   );
 };
