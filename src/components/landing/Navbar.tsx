@@ -102,9 +102,16 @@ export function Navbar({ user, onSignOut }: NavbarProps) {
               onClick={scrollToAnalysis}
               variant="outline"
               size="sm"
-              className="text-primary border-primary/50 hover:bg-primary/10"
+              className={cn(
+                "text-primary border-primary/50 hover:bg-primary/10 relative overflow-hidden group",
+                "hover:border-primary hover:shadow-[0_0_15px_hsl(var(--primary)/0.3)]",
+                "transition-all duration-300"
+              )}
             >
-              Use AI to Analyze
+              <span className="relative z-10 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                Analyze with AI
+              </span>
             </Button>
 
             {/* Theme Toggle */}

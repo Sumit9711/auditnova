@@ -10,6 +10,7 @@ import { FAQSection } from '@/components/landing/FAQSection';
 import { ImplementationSection } from '@/components/landing/ImplementationSection';
 import { ContactSection } from '@/components/landing/ContactSection';
 import { Footer } from '@/components/landing/Footer';
+import { AnalysisSection } from '@/components/dashboard/AnalysisSection';
 import { useEmailAuth } from '@/hooks/useEmailAuth';
 
 interface IndexProps {
@@ -25,6 +26,7 @@ const Index = ({ onSignOut }: IndexProps) => {
       
       <main>
         <HeroSection />
+        <AnalysisSection />
         <FeaturesSection />
         <UseCasesSection />
         <HowItWorksSection />
