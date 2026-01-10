@@ -2,23 +2,24 @@ import { useState, useEffect } from 'react';
 import { Shield, Sun, Moon, Menu, X, ChevronDown, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/hooks/useTheme';
-import { useAuth, User as AuthUser } from '@/hooks/useAuth';
+import { GoogleUser } from '@/hooks/useGoogleAuth';
 import { cn } from '@/lib/utils';
 
 interface NavbarProps {
-  onSignInClick: () => void;
+  user: GoogleUser | null;
+  onSignOut: () => void;
 }
 
 const navLinks = [
-  { label: 'Product', href: '#features' },
-  { label: 'Pricing', href: '#pricing' },
+  { label: 'Overview', href: '#features' },
+  { label: 'Use Cases', href: '#use-cases' },
   { label: 'How It Works', href: '#how-it-works' },
   { label: 'Security', href: '#security' },
+  { label: 'Docs', href: '#faq' },
 ];
 
-export function Navbar({ onSignInClick }: NavbarProps) {
+export function Navbar({ user, onSignOut }: NavbarProps) {
   const { theme, toggleTheme } = useTheme();
-  const { user, isAuthenticated, signOut } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -40,8 +41,11 @@ export function Navbar({ onSignInClick }: NavbarProps) {
     }
   };
 
-  const getInitials = (user: AuthUser) => {
-    return user.name.charAt(0).toUpperCase();
+  const scrollToAnalysis = () => {
+    const element = document.querySelector('#analysis');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -93,6 +97,16 @@ export function Navbar({ onSignInClick }: NavbarProps) {
 
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Use AI to Analyze Button */}
+            <Button
+              onClick={scrollToAnalysis}
+              variant="outline"
+              size="sm"
+              className="text-primary border-primary/50 hover:bg-primary/10"
+            >
+              Use AI to Analyze
+            </Button>
+
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -106,16 +120,24 @@ export function Navbar({ onSignInClick }: NavbarProps) {
               )}
             </button>
 
-            {/* Auth Button or User Menu */}
-            {isAuthenticated && user ? (
+            {/* User Menu */}
+            {user && (
               <div className="relative">
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-secondary transition-colors duration-200"
+                  className="flex items-center gap-2 p-1 rounded-lg hover:bg-secondary transition-colors duration-200"
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-semibold text-sm">
-                    {getInitials(user)}
-                  </div>
+                  {user.picture ? (
+                    <img
+                      src={user.picture}
+                      alt={user.name}
+                      className="w-8 h-8 rounded-full object-cover border-2 border-primary/50"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-semibold text-sm">
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
                   <ChevronDown className={cn(
                     "h-4 w-4 text-muted-foreground transition-transform duration-200",
                     isUserMenuOpen && "rotate-180"
@@ -132,7 +154,7 @@ export function Navbar({ onSignInClick }: NavbarProps) {
                     <div className="absolute right-0 top-full mt-2 w-56 glass-card p-2 z-50 animate-fade-in">
                       <div className="px-3 py-2 border-b border-border mb-2">
                         <p className="text-sm font-medium text-foreground">{user.name}</p>
-                        <p className="text-xs text-muted-foreground">{user.email}</p>
+                        <p className="text-xs text-muted-foreground truncate">{user.email}</p>
                       </div>
                       <button
                         onClick={() => {
@@ -145,25 +167,18 @@ export function Navbar({ onSignInClick }: NavbarProps) {
                       </button>
                       <button
                         onClick={() => {
-                          signOut();
+                          onSignOut();
                           setIsUserMenuOpen(false);
                         }}
                         className="w-full flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-colors duration-200"
                       >
                         <LogOut className="h-4 w-4" />
-                        Sign out
+                        Logout
                       </button>
                     </div>
                   </>
                 )}
               </div>
-            ) : (
-              <Button
-                onClick={onSignInClick}
-                className="glow-primary hover:scale-105 transition-transform duration-200"
-              >
-                Sign In
-              </Button>
             )}
           </div>
 
@@ -209,14 +224,23 @@ export function Navbar({ onSignInClick }: NavbarProps) {
                     <Moon className="h-5 w-5" />
                   )}
                 </button>
-                {isAuthenticated && user ? (
-                  <Button variant="outline" onClick={signOut}>
-                    Sign out
-                  </Button>
-                ) : (
-                  <Button onClick={onSignInClick}>
-                    Sign In
-                  </Button>
+                {user && (
+                  <div className="flex items-center gap-3">
+                    {user.picture ? (
+                      <img
+                        src={user.picture}
+                        alt={user.name}
+                        className="w-8 h-8 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-semibold text-sm">
+                        {user.name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <Button variant="outline" size="sm" onClick={onSignOut}>
+                      Logout
+                    </Button>
+                  </div>
                 )}
               </div>
             </div>
