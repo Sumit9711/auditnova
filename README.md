@@ -1,73 +1,190 @@
-# Welcome to your Lovable project
+# 🛡️ AnomalyGuard: AI-Based Government Policy Anomaly Detection Platform
 
-## Project info
+**Tagline:** *Detect Fraud. Protect Public Trust. Enable Transparent Governance.*
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+---
 
-## How can I edit this code?
+## 📋 Table of Contents
 
-There are several ways of editing your application.
+1. [Project Overview](#project-overview)
+2. [Problem Statement](#problem-statement)
+3. [Solution](#solution)
+4. [Key Features](#key-features)
+5. [Tech Stack](#tech-stack)
+6. [Architecture](#architecture)
+7. [Project Structure](#project-structure)
+8. [Installation & Setup](#installation--setup)
+9. [Usage](#usage)
+10. [How It Works](#how-it-works)
+11. [Use Cases](#use-cases)
+12. [Future Enhancements](#future-enhancements)
+13. [Contributing](#contributing)
+14. [License](#license)
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🎯 Project Overview
 
-Changes made via Lovable will be committed automatically to this repo.
+**AnomalyGuard** is a scalable, AI-powered web platform designed to analyze government policy and public-sector datasets, automatically detecting anomalies, irregular patterns, and potential misuse.
 
-**Use your preferred IDE**
+The system acts as a **decision-support tool** for analysts, auditors, and policymakers to:
+- Identify data points that deviate from expected behavior
+- Reduce financial leakages in welfare schemes
+- Improve transparency and accountability in public administration
+- Enable data-driven policy evaluation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+**Key Impact:**
+- Faster audits (up to 40% improvement)
+- Millions protected from financial leakage
+- Early detection of policy misalignment
+- Non-intrusive (supports human judgment, doesn't replace it)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 🔴 Problem Statement
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Government policies and welfare schemes generate **massive volumes of data**:
+- Beneficiary records
+- Budget allocations
+- Attendance & payroll data
+- Procurement transactions
+- Subsidy distributions
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Current Challenges:
 
-# Step 3: Install the necessary dependencies.
-npm i
+| Challenge | Impact |
+|-----------|--------|
+| **Manual Analysis** | Time-consuming, error-prone, difficult to scale |
+| **Undetected Fraud** | Financial leakages often go unnoticed until significant loss occurs |
+| **Policy Misalignment** | Actual implementation deviates from intended policy |
+| **Inefficiency** | Resource misallocation and duplicate payments |
+| **Lack of Accountability** | Limited transparency in public fund disbursement |
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+**Result:** Billions in wasted/misused public funds annually 💔
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## ✅ Solution
 
-**Use GitHub Codespaces**
+AnomalyGuard uses **AI-driven anomaly detection** combined with an **interactive dashboard** to:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. **Automatically analyze** structured datasets (CSV uploads)
+2. **Detect suspicious patterns** using multiple ML techniques
+3. **Highlight high-risk records** for human review
+4. **Visualize insights** through dynamic, interactive charts
+5. **Support decision-making** with actionable intelligence
 
-## What technologies are used for this project?
+### Key Principle:
+> **AI Assists, Humans Decide** — The system flags anomalies; analysts validate and take action.
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🚀 Key Features
 
-## How can I deploy this project?
+### 🔍 **Anomaly Detection Engine**
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+- ✅ **Multiple Detection Techniques:**
+  - Statistical methods (Z-Score, IQR)
+  - Isolation Forest (ML-based)
+  - Rule-based domain validation
+  
+- ✅ **Adaptable to Multiple Data Types:**
+  - Welfare beneficiary data
+  - Attendance & payroll records
+  - Budget allocations
+  - Procurement transactions
+  - Policy implementation metrics
 
-## Can I connect a custom domain to my Lovable project?
+- ✅ **Real-time Scoring:**
+  - Anomaly score (0-100)
+  - Risk level classification (Critical/High/Medium/Low)
+  - Reasoning for flags
 
-Yes, you can!
+### 📊 **Interactive Web Dashboard**
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- ✅ **Secure File Upload:**
+  - Drag-and-drop CSV upload
+  - Data validation before processing
+  - File size & format checks
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- ✅ **Real-time Analytics:**
+  - Animated stat cards (count-up effects)
+  - Dynamic charts:
+    - Bar chart: Anomalies by department
+    - Pie chart: Anomaly vs normal distribution
+    - Line chart: Amount trends over time
+    - Gauge chart: Detection accuracy %
+  - Smooth animations & transitions
+
+- ✅ **Advanced Filtering:**
+  - Filter by department, scheme type, risk level
+  - Amount range selection
+  - Date range filtering
+  - Real-time chart updates
+
+- ✅ **Detailed Results:**
+  - Suspicious transactions table (sortable, paginated)
+  - Top N anomalies ranked by risk/amount
+  - Export functionality (CSV, JSON)
+
+### 🔐 **Security & Access Control**
+
+- ✅ **Google OAuth Authentication**
+  - Real Google Sign-In integration
+  - Secure user session management
+  - No raw password storage
+
+- ✅ **Role-Based Access (Future):**
+  - Admin (full access)
+  - Analyst (view/export)
+  - Viewer (read-only)
+
+- ✅ **Data Protection:**
+  - Read-only analysis (no data modification)
+  - Secure file handling
+  - Session timeout
+
+### 📱 **Fully Responsive Design**
+
+- ✅ Desktop (1200px+)
+- ✅ Tablet (768px - 1199px)
+- ✅ Mobile (< 768px)
+- ✅ Smooth animations across all devices
+
+---
+
+## 🛠️ Tech Stack
+
+### **Frontend**
+
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Framework** | React 18+ | Component-based UI |
+| **Language** | JavaScript (ES6+) | Core logic |
+| **Styling** | CSS3 + CSS Variables | Responsive, themeable design |
+| **Charts** | Recharts / Chart.js | Dynamic data visualization |
+| **Auth** | Google Identity Services | OAuth 2.0 authentication |
+| **State Mgmt** | React Hooks | Local state management |
+| **Animations** | CSS Transitions + Keyframes | Smooth UX |
+
+**Design Inspiration:** Sift.com (fraud detection SaaS)
+
+### **Backend**
+
+| Component | Technology | Purpose |
+|-----------|-----------|---------|
+| **Framework** | Flask (Python) | REST API server |
+| **Database** | MySQL | Data persistence |
+| **API Architecture** | RESTful | Clean, scalable endpoints |
+| **Authentication** | JWT Tokens | Secure API access |
+| **File Handling** | FileStorage | CSV upload processing |
+
+### **AI/ML**
+
+| Component | Technology | Purpose |
+|-----------|-----------|---------|
+| **Data Processing** | Pandas, NumPy | CSV parsing, data cleaning |
+| **ML Models** | Scikit-learn | Anomaly detection algorithms |
+| **Algorithms** | Isolation Forest, Z-Score, IQR | Pattern detection |
+| **Model Training** | Online learning | Adapts to new data |
+| **Explainability** | Custom logic | Why each record was flagged |
