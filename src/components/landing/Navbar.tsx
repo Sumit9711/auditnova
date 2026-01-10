@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Shield, Sun, Moon, Menu, X, ChevronDown, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/hooks/useTheme';
-import { GoogleUser } from '@/hooks/useGoogleAuth';
+import { EmailUser } from '@/hooks/useEmailAuth';
 import { cn } from '@/lib/utils';
 
 interface NavbarProps {
-  user: GoogleUser | null;
+  user: EmailUser | null;
   onSignOut: () => void;
 }
 

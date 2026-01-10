@@ -10,14 +10,14 @@ import { FAQSection } from '@/components/landing/FAQSection';
 import { ImplementationSection } from '@/components/landing/ImplementationSection';
 import { ContactSection } from '@/components/landing/ContactSection';
 import { Footer } from '@/components/landing/Footer';
-import { useGoogleAuth } from '@/hooks/useGoogleAuth';
+import { useEmailAuth } from '@/hooks/useEmailAuth';
 
 interface IndexProps {
   onSignOut: () => void;
 }
 
 const Index = ({ onSignOut }: IndexProps) => {
-  const { user } = useGoogleAuth();
+  const { user } = useEmailAuth();
 
   return (
     <div className="min-h-screen bg-background">
