@@ -87,7 +87,7 @@ export default function Dashboard() {
             <div className="flex items-center gap-3">
               <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full glass-card">
                 <Zap className="h-4 w-4 text-amber" />    
-              <span className="text-sm text-muted-foreground">ML Model v2.1</span>
+              <span className="text-sm text-muted-foreground">ML Model v1.1</span>
 
               <button onClick={toggleTheme} className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200 cursor-pointer">
                 {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -113,9 +113,9 @@ export default function Dashboard() {
         {/* Model Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12 animate-fade-in" style={{ animationDelay: '0.1s' }}>
           {[
-            { icon: Brain, title: 'Model Type', value: 'Ensemble ML', color: 'primary' },
-            { icon: Database, title: 'Training Data', value: '10M+ Records', color: 'emerald' },
-            { icon: Shield, title: 'Accuracy Rate', value: '97.3%', color: 'amber' },
+            { icon: Brain, title: 'Model Type', value: 'Isolation Forest', color: 'primary' },
+            { icon: Database, title: 'Training Data', value: '1M+ Records', color: 'emerald' },
+            { icon: Shield, title: 'Accuracy Rate', value: '90.5%', color: 'amber' },
           ].map((item, idx) => (
             <Card key={idx} className="glass-card hover-glow cursor-pointer transition-all duration-300 hover:scale-[1.02] group">
               <CardContent className="p-4 flex items-center gap-4">
