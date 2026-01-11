@@ -45,7 +45,7 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
     }
 
     if (!validatePassword(password)) {
-      setError('Password must be at least 6 characters');
+      setError('Password must be at least 6 characters and include letters and numbers');
       return;
     }
 

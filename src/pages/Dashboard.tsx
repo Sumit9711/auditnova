@@ -86,15 +86,9 @@ export default function Dashboard() {
             </div>
             <div className="flex items-center gap-3">
               <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full glass-card">
-                <Zap className="h-4 w-4 text-amber" />
-                  <button 
-                onClick={() => navigate("/model-config")}
-                className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full glass-card 
-                 hover:bg-white/10 transition cursor-pointer group"
-              >
+                <Zap className="h-4 w-4 text-amber" />    
               <span className="text-sm text-muted-foreground">ML Model v2.1</span>
-              </button>
-           
+
               <button onClick={toggleTheme} className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200 cursor-pointer">
                 {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </button>
