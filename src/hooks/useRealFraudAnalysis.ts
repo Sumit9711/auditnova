@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import type { APIAnalysisResponse, APIFraudResult, TransformedResults } from '@/types/api';
 import { toast } from 'sonner';
 
-const API_ENDPOINT = 'https://fraud-api-6kib.onrender.com/analyze';
+const API_ENDPOINT = 'https://fraud-api-6kib.onrender.com/predict';
 
 interface UseRealFraudAnalysisReturn {
   analyzeFile: (file: File) => Promise<TransformedResults | null>;
