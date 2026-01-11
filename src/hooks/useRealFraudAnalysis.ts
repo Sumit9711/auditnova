@@ -25,7 +25,7 @@ const RISK_COLORS: Record<string, string> = {
 function transformAPIResponse(response: APIAnalysisResponse): TransformedResults {
   const { total_transactions, fraud_detected, results } = response;
 
-  // Calculate stats
+  // Calculate stats from API response
   const fraudRate = total_transactions > 0 ? (fraud_detected / total_transactions) * 100 : 0;
   const totalFraudAmount = results
     .filter(r => r.fraud_flag === 1)
@@ -38,24 +38,7 @@ function transformAPIResponse(response: APIAnalysisResponse): TransformedResults
     totalFraudAmount,
   };
 
-  // Department aggregation
-  const deptMap = new Map<string, { anomalies: number; total: number; riskAmount: number }>();
-  results.forEach(r => {
-    const dept = r.department_id || 'Unknown';
-    const current = deptMap.get(dept) || { anomalies: 0, total: 0, riskAmount: 0 };
-    current.total++;
-    if (r.fraud_flag === 1) {
-      current.anomalies++;
-      current.riskAmount += r.amount;
-    }
-    deptMap.set(dept, current);
-  });
-
-  const departmentData = Array.from(deptMap.entries())
-    .map(([name, data]) => ({ name, ...data }))
-    .sort((a, b) => b.anomalies - a.anomalies);
-
-  // Risk distribution
+  // Risk distribution from API results
   const riskCounts: Record<string, number> = { Critical: 0, High: 0, Medium: 0, Low: 0 };
   results.filter(r => r.fraud_flag === 1).forEach(r => {
     if (r.risk_level && riskCounts[r.risk_level] !== undefined) {
@@ -72,7 +55,7 @@ function transformAPIResponse(response: APIAnalysisResponse): TransformedResults
       color: RISK_COLORS[level] || 'hsl(var(--muted-foreground))',
     }));
 
-  // Generate critical findings
+  // Generate critical findings from API data
   const criticalFindings: string[] = [];
   const criticalCount = riskCounts.Critical;
   const highCount = riskCounts.High;
@@ -83,40 +66,41 @@ function transformAPIResponse(response: APIAnalysisResponse): TransformedResults
   if (highCount > 0) {
     criticalFindings.push(`${highCount} transactions flagged as HIGH risk`);
   }
-  if (departmentData.length > 0 && departmentData[0].anomalies > 0) {
+
+  // Find highest risk score
+  const highestRiskTxn = results.reduce((max, r) => 
+    r.risk_score > (max?.risk_score || 0) ? r : max, 
+    results[0] || null
+  );
+  
+  if (highestRiskTxn && highestRiskTxn.risk_score > 0) {
     criticalFindings.push(
-      `${departmentData[0].name} department has ${departmentData[0].anomalies} suspicious transactions (₹${departmentData[0].riskAmount.toLocaleString()} at risk)`
+      `Highest risk score: ${highestRiskTxn.risk_score.toFixed(2)} (Transaction: ${highestRiskTxn.transaction_id})`
     );
   }
 
-  // Find highest anomaly score
-  const highestScore = results.reduce((max, r) => 
-    r.anomaly_score > max.anomaly_score ? r : max, 
-    results[0] || { anomaly_score: 0, transaction_id: 'N/A' }
-  );
-  
-  if (highestScore && highestScore.anomaly_score > 0) {
-    criticalFindings.push(
-      `Highest anomaly score: ${highestScore.anomaly_score.toFixed(1)} (Transaction: ${highestScore.transaction_id})`
-    );
+  // Calculate total fraud amount for findings
+  if (totalFraudAmount > 0) {
+    criticalFindings.push(`Total amount at risk: ₹${totalFraudAmount.toLocaleString()}`);
   }
 
   // Generate recommendations
   const recommendations: string[] = [];
-  if (departmentData.length > 0 && departmentData[0].anomalies > 0) {
-    recommendations.push(`Immediately review all transactions from ${departmentData[0].name} department`);
-  }
   if (criticalCount > 0) {
-    recommendations.push(`Escalate ${criticalCount} critical-risk transactions to senior management`);
+    recommendations.push(`Escalate ${criticalCount} critical-risk transactions to senior management immediately`);
   }
-  recommendations.push(`Review ${criticalCount + highCount} high-priority transactions immediately`);
+  if (criticalCount + highCount > 0) {
+    recommendations.push(`Review ${criticalCount + highCount} high-priority transactions immediately`);
+  }
   recommendations.push('Implement continuous monitoring for flagged patterns');
-  recommendations.push('Cross-reference flagged vendors with approved vendor list');
+  recommendations.push('Cross-reference flagged transactions with vendor approval list');
+  if (fraud_detected > 0) {
+    recommendations.push(`Investigate all ${fraud_detected} suspicious transactions identified by the ML model`);
+  }
 
   return {
     stats,
     transactions: results,
-    departmentData,
     riskDistribution,
     criticalFindings,
     recommendations,
@@ -191,14 +175,14 @@ export function useRealFraudAnalysis(): UseRealFraudAnalysisReturn {
       
       const data: APIAnalysisResponse = await response.json();
 
-      // Validate response structure
+      // Validate response structure (exact fields from backend)
       if (typeof data.total_transactions !== 'number' || typeof data.fraud_detected !== 'number' || !Array.isArray(data.results)) {
         throw new Error('Invalid response format from API');
       }
 
       // Step 6: Transform data
       setProgress(85);
-      setProgressStep('Generating insights and charts...');
+      setProgressStep('Generating insights...');
       await new Promise(resolve => setTimeout(resolve, 500));
 
       const transformedResults = transformAPIResponse(data);

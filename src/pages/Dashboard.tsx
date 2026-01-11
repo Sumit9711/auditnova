@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Brain, Zap, Sun, Moon, Database, Shield, Upload, Sparkles, AlertCircle, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -108,21 +108,6 @@ export default function Dashboard() {
     setShowResults(false);
   }, [resetAnalysis]);
 
-  // Transform results for charts using exact API field names
-  const chartData = results ? {
-    departmentData: results.departmentData.map(d => ({ 
-      name: d.name, 
-      anomalies: d.anomalies, 
-      total: d.total 
-    })),
-    timeSeriesData: [] as { date: string; amount: number; anomalies: number }[], // API doesn't return time series
-    riskDistribution: results.riskDistribution.map(r => ({ 
-      level: r.level, 
-      count: r.count, 
-      color: r.color 
-    })),
-  } : null;
-
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Background Effects */}
@@ -151,7 +136,7 @@ export default function Dashboard() {
             <div className="flex items-center gap-3">
               <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full glass-card">
                 <Zap className="h-4 w-4 text-amber" />    
-                <span className="text-sm text-muted-foreground">ML Model v2.0</span>
+                <span className="text-sm text-muted-foreground">Isolation Forest ML</span>
               </div>
               <a 
                 href="https://fraud-api-6kib.onrender.com" 
@@ -187,7 +172,7 @@ export default function Dashboard() {
           {[
             { icon: Brain, title: 'Model Type', value: 'Isolation Forest', color: 'primary' },
             { icon: Database, title: 'API Status', value: 'Online', color: 'emerald' },
-            { icon: Shield, title: 'Accuracy Rate', value: '90.5%', color: 'amber' },
+            { icon: Shield, title: 'Detection Rate', value: '95%+', color: 'amber' },
           ].map((item, idx) => (
             <Card key={idx} className="glass-card hover-glow cursor-pointer transition-all duration-300 hover:scale-[1.02] group">
               <CardContent className="p-4 flex items-center gap-4">
@@ -217,7 +202,7 @@ export default function Dashboard() {
               error={parseError || error}
             />
           </div>
-        ) : results && chartData && (
+        ) : results && (
           <div className="space-y-8 animate-fade-in">
             {/* New Analysis Button */}
             <div className="flex justify-center">
@@ -234,11 +219,10 @@ export default function Dashboard() {
               totalFraudRiskAmount={results.stats.totalFraudAmount}
             />
 
-            {/* Charts */}
+            {/* Charts - using only data available from API */}
             <FraudCharts
-              departmentData={chartData.departmentData}
-              timeSeriesData={chartData.timeSeriesData}
-              riskDistribution={chartData.riskDistribution}
+              riskDistribution={results.riskDistribution}
+              transactions={rawResults}
             />
 
             {/* Transactions Table - using exact API response */}
@@ -258,12 +242,16 @@ export default function Dashboard() {
                     ✓ <span className="text-coral font-semibold">{results.stats.fraudDetected}</span> fraud cases detected out of {results.stats.totalTransactions.toLocaleString()} transactions ({results.stats.fraudRate.toFixed(2)}% fraud rate)
                   </p>
                   
-                  <p className="text-amber font-semibold mt-4 mb-2 flex items-center gap-2">
-                    <AlertCircle className="h-4 w-4" /> CRITICAL FINDINGS:
-                  </p>
-                  {results.criticalFindings.map((finding, idx) => (
-                    <p key={idx} className="ml-4 text-muted-foreground">• {finding}</p>
-                  ))}
+                  {results.criticalFindings.length > 0 && (
+                    <>
+                      <p className="text-amber font-semibold mt-4 mb-2 flex items-center gap-2">
+                        <AlertCircle className="h-4 w-4" /> CRITICAL FINDINGS:
+                      </p>
+                      {results.criticalFindings.map((finding, idx) => (
+                        <p key={idx} className="ml-4 text-muted-foreground">• {finding}</p>
+                      ))}
+                    </>
+                  )}
                   
                   <p className="text-primary font-semibold mt-4 mb-2 flex items-center gap-2">
                     <Sparkles className="h-4 w-4" /> RECOMMENDED ACTIONS:

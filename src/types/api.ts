@@ -1,12 +1,10 @@
-// Types that match the EXACT API response from https://fraud-api-6kib.onrender.com/analyze
+// Types that match the EXACT API response from https://fraud-api-6kib.onrender.com/predict
+// Based on the backend code at https://github.com/AKASHKATYAN/Fraud-API
 
 export interface APIFraudResult {
   transaction_id: string;
-  department_id: string;
-  vendor_id: string;
   amount: number;
   fraud_flag: number; // 1 = fraud, 0 = not fraud
-  anomaly_score: number;
   risk_score: number;
   risk_level: 'Critical' | 'High' | 'Medium' | 'Low';
   explanation: string;
@@ -18,19 +16,12 @@ export interface APIAnalysisResponse {
   results: APIFraudResult[];
 }
 
-// Transformed types for the dashboard
+// Transformed types for the dashboard (calculated on frontend from API data)
 export interface DashboardStats {
   totalTransactions: number;
   fraudDetected: number;
   fraudRate: number;
   totalFraudAmount: number;
-}
-
-export interface DepartmentAnomalies {
-  name: string;
-  anomalies: number;
-  total: number;
-  riskAmount: number;
 }
 
 export interface RiskDistribution {
@@ -40,16 +31,9 @@ export interface RiskDistribution {
   color: string;
 }
 
-export interface TimeSeriesData {
-  date: string;
-  amount: number;
-  anomalies: number;
-}
-
 export interface TransformedResults {
   stats: DashboardStats;
   transactions: APIFraudResult[];
-  departmentData: DepartmentAnomalies[];
   riskDistribution: RiskDistribution[];
   criticalFindings: string[];
   recommendations: string[];
