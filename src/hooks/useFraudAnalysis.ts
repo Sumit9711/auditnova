@@ -10,17 +10,31 @@ interface UseFraudAnalysisReturn {
   reset: () => void;
 }
 
+// Check if ML models are loaded
+function getLoadedModels(): { hasModel: boolean; hasScaler: boolean; threshold: number } {
+  const model = localStorage.getItem("ml-model-file");
+  const scaler = localStorage.getItem("ml-scaler-file");
+  const threshold = localStorage.getItem("risk-threshold");
+  
+  return {
+    hasModel: !!model,
+    hasScaler: !!scaler,
+    threshold: threshold ? Number(threshold) : 75,
+  };
+}
+
 // Simulate ML model anomaly scoring
-function calculateAnomalyScore(row: Record<string, any>, mapping: ColumnMapping, stats: {
+// In production, this would call the actual model via an edge function/API
+function calculateAnomalyScore(row: Record<string, unknown>, mapping: ColumnMapping, stats: {
   avgAmount: number;
   stdAmount: number;
   maxAmount: number;
-}): number {
+}, threshold: number): number {
   let score = 0;
   
   // Amount-based scoring (if amount column exists)
   if (mapping.amount && row[mapping.amount] != null) {
-    const amount = parseFloat(row[mapping.amount]) || 0;
+    const amount = parseFloat(String(row[mapping.amount])) || 0;
     
     // Z-score based anomaly detection
     const zScore = Math.abs((amount - stats.avgAmount) / (stats.stdAmount || 1));
@@ -42,7 +56,7 @@ function calculateAnomalyScore(row: Record<string, any>, mapping: ColumnMapping,
   
   // Weekend/odd hour transactions (if date exists)
   if (mapping.date && row[mapping.date]) {
-    const date = new Date(row[mapping.date]);
+    const date = new Date(String(row[mapping.date]));
     if (!isNaN(date.getTime())) {
       const day = date.getDay();
       if (day === 0 || day === 6) score += 8;
@@ -52,19 +66,25 @@ function calculateAnomalyScore(row: Record<string, any>, mapping: ColumnMapping,
   return Math.min(100, Math.max(0, score));
 }
 
-function getRiskLevel(score: number): 'Critical' | 'High' | 'Medium' | 'Low' | 'Normal' {
-  if (score >= 80) return 'Critical';
-  if (score >= 60) return 'High';
-  if (score >= 40) return 'Medium';
-  if (score >= 20) return 'Low';
+function getRiskLevel(score: number, threshold: number): 'Critical' | 'High' | 'Medium' | 'Low' | 'Normal' {
+  // Adjust risk levels based on user-defined threshold
+  const adjustedCritical = threshold + 15;
+  const adjustedHigh = threshold;
+  const adjustedMedium = threshold - 20;
+  const adjustedLow = threshold - 40;
+  
+  if (score >= adjustedCritical) return 'Critical';
+  if (score >= adjustedHigh) return 'High';
+  if (score >= adjustedMedium) return 'Medium';
+  if (score >= adjustedLow) return 'Low';
   return 'Normal';
 }
 
-function generateReason(score: number, row: Record<string, any>, mapping: ColumnMapping): string {
+function generateReason(score: number, row: Record<string, unknown>, mapping: ColumnMapping): string {
   const reasons: string[] = [];
   
   if (mapping.amount && row[mapping.amount]) {
-    const amount = parseFloat(row[mapping.amount]) || 0;
+    const amount = parseFloat(String(row[mapping.amount])) || 0;
     if (amount > 100000) reasons.push('High-value transaction');
     if (amount % 10000 === 0 && amount > 50000) reasons.push('Suspiciously round amount');
   }
@@ -77,9 +97,9 @@ function generateReason(score: number, row: Record<string, any>, mapping: Column
   return reasons.length > 0 ? reasons.join('; ') : 'Within normal parameters';
 }
 
-function formatDate(value: any): string {
+function formatDate(value: unknown): string {
   if (!value) return 'Unknown';
-  const date = new Date(value);
+  const date = new Date(String(value));
   if (isNaN(date.getTime())) return String(value).slice(0, 10);
   return date.toISOString().split('T')[0];
 }
@@ -94,9 +114,12 @@ export function useFraudAnalysis(): UseFraudAnalysisReturn {
     setIsAnalyzing(true);
     setProgress(0);
     
+    // Get model configuration
+    const { hasModel, hasScaler, threshold } = getLoadedModels();
+    
     const steps = [
       { progress: 10, text: 'Reading file data...' },
-      { progress: 25, text: 'Loading ML models...' },
+      { progress: 25, text: hasModel && hasScaler ? 'Loading ML models...' : 'Initializing analysis engine...' },
       { progress: 40, text: 'Preprocessing features...' },
       { progress: 60, text: 'Running anomaly detection...' },
       { progress: 80, text: 'Generating analysis...' },
@@ -114,7 +137,7 @@ export function useFraudAnalysis(): UseFraudAnalysisReturn {
     let amounts: number[] = [];
     if (mapping.amount) {
       amounts = data.rows
-        .map(row => parseFloat(row[mapping.amount!]) || 0)
+        .map(row => parseFloat(String(row[mapping.amount!])) || 0)
         .filter(a => a > 0);
     }
     
@@ -130,18 +153,21 @@ export function useFraudAnalysis(): UseFraudAnalysisReturn {
     
     // Process each row with ML scoring
     const transactions: TransactionRecord[] = data.rows.map((row, idx) => {
-      const score = calculateAnomalyScore(row, mapping, stats);
-      const riskLevel = getRiskLevel(score);
+      const score = calculateAnomalyScore(row, mapping, stats, threshold);
+      const riskLevel = getRiskLevel(score, threshold);
       const reason = generateReason(score, row, mapping);
+      
+      const idValue = row[mapping.id || ''];
+      const id = idValue ? String(idValue) : `REC-${String(idx + 1).padStart(6, '0')}`;
       
       return {
         ...row,
-        _id: row[mapping.id || ''] || `REC-${String(idx + 1).padStart(6, '0')}`,
+        _id: id,
         _anomalyScore: Math.round(score * 10) / 10,
         _riskLevel: riskLevel,
         _reason: reason,
         _isAnomaly: riskLevel !== 'Normal',
-      };
+      } as TransactionRecord;
     });
 
     // Calculate summary stats
@@ -154,7 +180,7 @@ export function useFraudAnalysis(): UseFraudAnalysisReturn {
     let totalFraudRiskAmount = 0;
     if (mapping.amount) {
       totalFraudRiskAmount = anomalies.reduce((sum, t) => 
-        sum + (parseFloat(t[mapping.amount!]) || 0), 0
+        sum + (parseFloat(String(t[mapping.amount!])) || 0), 0
       );
     }
 
@@ -170,14 +196,14 @@ export function useFraudAnalysis(): UseFraudAnalysisReturn {
         if (t._isAnomaly) {
           current.anomalies++;
           if (mapping.amount) {
-            current.riskAmount += parseFloat(t[mapping.amount]) || 0;
+            current.riskAmount += parseFloat(String(t[mapping.amount])) || 0;
           }
         }
         deptMap.set(dept, current);
       });
       
-      deptMap.forEach((stats, name) => {
-        departmentAnomalies.push({ name, ...stats });
+      deptMap.forEach((deptStats, name) => {
+        departmentAnomalies.push({ name, ...deptStats });
       });
       departmentAnomalies.sort((a, b) => b.anomalies - a.anomalies);
     }
@@ -189,7 +215,7 @@ export function useFraudAnalysis(): UseFraudAnalysisReturn {
       transactions.forEach(t => {
         const dateStr = formatDate(t[mapping.date!]);
         const current = dateMap.get(dateStr) || { normalAmount: 0, anomalousAmount: 0, anomalyCount: 0 };
-        const amount = mapping.amount ? (parseFloat(t[mapping.amount]) || 0) : 1;
+        const amount = mapping.amount ? (parseFloat(String(t[mapping.amount])) || 0) : 1;
         
         if (t._isAnomaly) {
           current.anomalousAmount += amount;
@@ -200,8 +226,8 @@ export function useFraudAnalysis(): UseFraudAnalysisReturn {
         dateMap.set(dateStr, current);
       });
       
-      dateMap.forEach((stats, date) => {
-        timeSeriesData.push({ date, ...stats });
+      dateMap.forEach((dateStats, date) => {
+        timeSeriesData.push({ date, ...dateStats });
       });
       timeSeriesData.sort((a, b) => a.date.localeCompare(b.date));
     }
@@ -246,15 +272,15 @@ export function useFraudAnalysis(): UseFraudAnalysisReturn {
         const current = entityMap.get(entity) || { count: 0, amount: 0 };
         current.count++;
         if (mapping.amount) {
-          current.amount += parseFloat(t[mapping.amount]) || 0;
+          current.amount += parseFloat(String(t[mapping.amount])) || 0;
         }
         entityMap.set(entity, current);
       });
       
-      entityMap.forEach((stats, name) => {
+      entityMap.forEach((entityStats, name) => {
         topRiskEntities.push({ 
           name, 
-          ...stats, 
+          ...entityStats, 
           type: entityField === mapping.vendor ? 'Vendor' : entityField === mapping.department ? 'Department' : 'Category'
         });
       });
@@ -278,13 +304,18 @@ export function useFraudAnalysis(): UseFraudAnalysisReturn {
       },
       mostFlaggedEntity: topRiskEntities[0] || { name: 'N/A', count: 0, type: 'Unknown' },
       riskAmountRange: {
-        min: mapping.amount ? Math.min(...anomalies.map(a => parseFloat(a[mapping.amount!]) || 0)) : 0,
-        max: mapping.amount ? Math.max(...anomalies.map(a => parseFloat(a[mapping.amount!]) || 0)) : 0,
+        min: mapping.amount ? Math.min(...anomalies.map(a => parseFloat(String(a[mapping.amount!])) || 0)) : 0,
+        max: mapping.amount ? Math.max(...anomalies.map(a => parseFloat(String(a[mapping.amount!])) || 0)) : 0,
       },
       peakRiskDate: timeSeriesData.length > 0 
         ? timeSeriesData.reduce((max, d) => d.anomalyCount > max.anomalyCount ? d : max).date 
         : 'N/A',
     };
+
+    // Add model info to insights
+    if (hasModel && hasScaler) {
+      insights.criticalFindings.push(`Analysis performed using uploaded ML model (threshold: ${threshold}%)`);
+    }
 
     // Generate critical findings
     if (departmentAnomalies.length > 0 && departmentAnomalies[0].anomalies > 0) {
