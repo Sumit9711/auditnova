@@ -27,9 +27,9 @@ const benefits = [
 
 const metrics = [
   { value: '40%', label: 'Faster Audits' },
-  { value: '2.3B+', label: 'Records Analyzed' },
-  { value: '₹850Cr', label: 'Leakages Identified' },
-  { value: '99.2%', label: 'Detection Accuracy' },
+  { value: '1.3M+', label: 'Records Analyzed' },
+  { value: '₹85Cr', label: 'Leakages Identified' },
+  { value: '94.2%', label: 'Detection Accuracy' },
 ];
 
 export function WhyItMattersSection() {

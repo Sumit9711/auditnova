@@ -21,6 +21,8 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
   const validatePassword = (password: string) => {
   return (
     password.length >= 6 
+    && /[A-Za-z]/.test(password) 
+    && /[0-9]/.test(password)
   );
 };
 

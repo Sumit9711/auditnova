@@ -37,12 +37,17 @@ export function FraudCharts({ departmentData, timeSeriesData, riskDistribution }
   }, []);
 
   // Custom tooltip styles
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  interface TooltipPayload {
+    name: string;
+    value: number | string;
+    color: string;
+  }
+  const CustomTooltip = ({ active, payload, label }: { active: boolean; payload: TooltipPayload[]; label: string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="glass-card p-3 text-sm border border-primary/20">
           <p className="font-medium text-foreground mb-1">{label}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry: TooltipPayload, index: number) => (
             <p key={index} style={{ color: entry.color }} className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
               {entry.name}: {typeof entry.value === 'number' ? entry.value.toLocaleString() : entry.value}
@@ -82,7 +87,7 @@ export function FraudCharts({ departmentData, timeSeriesData, riskDistribution }
                   width={80}
                   tickFormatter={(value) => value.length > 10 ? value.slice(0, 10) + '...' : value}
                 />
-                <Tooltip content={<CustomTooltip />} />
+                <Tooltip content={<CustomTooltip active={false} payload={[]} label={''} />} />
                 <Bar
                   dataKey="anomalies"
                   fill="hsl(var(--coral))"
@@ -137,7 +142,7 @@ export function FraudCharts({ departmentData, timeSeriesData, riskDistribution }
                   }}
                 />
                 <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
-                <Tooltip content={<CustomTooltip />} />
+                <Tooltip content={<CustomTooltip active={false} payload={[]} label={''} />} />
                 <Legend />
                 <Area
                   type="monotone"
@@ -180,7 +185,7 @@ export function FraudCharts({ departmentData, timeSeriesData, riskDistribution }
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip content={<CustomTooltip />} />
+                <Tooltip content={<CustomTooltip active={false} payload={[]} label={''} />} />
                 <Legend
                   formatter={(value) => <span className="text-muted-foreground text-sm">{value}</span>}
                 />
@@ -214,7 +219,7 @@ export function FraudCharts({ departmentData, timeSeriesData, riskDistribution }
                   }}
                 />
                 <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
-                <Tooltip content={<CustomTooltip />} />
+                <Tooltip content={<CustomTooltip active={false} payload={[]} label={''} />} />
                 <Legend />
                 <Line
                   type="monotone"

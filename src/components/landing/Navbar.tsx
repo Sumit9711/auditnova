@@ -15,7 +15,6 @@ const navLinks = [
   { label: 'Overview', href: '#features' },
   { label: 'Use Cases', href: '#use-cases' },
   { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Security', href: '#security' },
   { label: 'FAQs', href: '#faq' },
 ];
 

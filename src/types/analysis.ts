@@ -2,7 +2,7 @@
 
 export interface ParsedData {
   headers: string[];
-  rows: Record<string, any>[];
+  rows: Record<string, unknown>[];
   columnTypes: Record<string, 'string' | 'number' | 'date' | 'boolean'>;
 }
 

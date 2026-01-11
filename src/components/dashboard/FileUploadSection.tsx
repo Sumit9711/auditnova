@@ -16,7 +16,7 @@ import {
 interface FileUploadSectionProps {
   onFileSelect: (file: File) => void;
   fileInfo: FileInfo | null;
-  previewRows: Record<string, any>[];
+  previewRows: Record<string, unknown>[];
   parsedData: ParsedData | null;
   isLoading: boolean;
   error: string | null;
@@ -109,7 +109,7 @@ export function FileUploadSection({
           ) : error ? (
             <AlertCircle className="h-10 w-10 md:h-12 md:w-12 text-destructive" />
           ) : fileInfo ? (
-            <CheckCircle2 className="h-10 w-10 md:h-12 md:w-12 text-emerald animate-bounce" />
+            <CheckCircle2 className="h-10 w-10 md:h-12 md:w-12 text-emerald" />
           ) : (
             <Upload className={cn(
               "h-10 w-10 md:h-12 md:w-12 text-primary transition-transform duration-300",

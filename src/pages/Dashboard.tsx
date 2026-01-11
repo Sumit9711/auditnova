@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, Brain, Zap, Sun, Moon, Database, Shield, Upload, Sparkles } from 'lucide-react';
+import { Link, useNavigate} from 'react-router-dom';
+import { ArrowLeft, Brain, Zap, Sun, Moon, Database, Shield, Upload, Sparkles, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTheme } from '@/hooks/useTheme';
@@ -18,6 +18,7 @@ export default function Dashboard() {
   const { parseFile, parsedData, fileInfo, columnMapping, isLoading: isParsingFile, error: parseError, previewRows, reset: resetParser } = useFileParser();
   const { analyze, results, isAnalyzing, progress, progressStep, reset: resetAnalysis } = useFraudAnalysis();
   const [showResults, setShowResults] = useState(false);
+  const navigate = useNavigate();
 
   const handleFileSelect = useCallback(async (file: File) => {
     resetAnalysis();
@@ -80,19 +81,26 @@ export default function Dashboard() {
               <div className="h-6 w-px bg-border hidden sm:block" />
               <div className="flex items-center gap-2">
                 <Brain className="h-6 w-6 text-primary" />
-                <span className="font-bold text-lg text-foreground">AnomalyGuard AI</span>
+                <span className="font-bold text-lg text-foreground">ChitraGuptAI Analysis</span>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full glass-card">
                 <Zap className="h-4 w-4 text-amber" />
-                <span className="text-sm text-muted-foreground">ML Model v2.1</span>
-              </div>
+                  <button 
+                onClick={() => navigate("/model-config")}
+                className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full glass-card 
+                 hover:bg-white/10 transition cursor-pointer group"
+              >
+              <span className="text-sm text-muted-foreground">ML Model v2.1</span>
+              </button>
+           
               <button onClick={toggleTheme} className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-all duration-200 cursor-pointer">
                 {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </button>
             </div>
           </div>
+        </div>
         </div>
       </header>
 
@@ -175,21 +183,21 @@ export default function Dashboard() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Sparkles className="h-5 w-5 text-primary" />
-                  AI Analysis Summary
+                   Analysis Summary
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="p-4 rounded-lg bg-secondary/50 font-mono text-sm">
-                  <p className="text-lg font-bold mb-3">📊 ANALYSIS SUMMARY</p>
-                  <p className="text-muted-foreground mb-4">────────────────────────────</p>
-                  <p className="mb-2">✓ <span className="text-coral font-semibold">{results.anomaliesDetected}</span> anomalies detected out of {results.totalRecords.toLocaleString()} records ({results.anomalyRate.toFixed(2)}% fraud rate)</p>
+                  <p className="mb-2"> ✓ <span className="text-coral font-semibold">{results.anomaliesDetected}</span> anomalies detected out of {results.totalRecords.toLocaleString()} records ({results.anomalyRate.toFixed(2)}% fraud rate)</p>
                   
-                  <p className="text-amber font-semibold mt-4 mb-2">🚨 CRITICAL FINDINGS:</p>
+                    <p className="text-amber font-semibold mt-4 mb-2 flex items-center gap-2"><AlertCircle className="h-4 w-4" /> CRITICAL FINDINGS:</p>
                   {results.insights.criticalFindings.map((finding, idx) => (
                     <p key={idx} className="ml-4 text-muted-foreground">• {finding}</p>
                   ))}
                   
-                  <p className="text-primary font-semibold mt-4 mb-2">💡 RECOMMENDED ACTIONS:</p>
+                    <p className="text-primary font-semibold mt-4 mb-2 flex items-center gap-2">
+                    <Sparkles className="h-4 w-4" /> RECOMMENDED ACTIONS:
+                    </p>
                   {results.insights.recommendations.map((rec, idx) => (
                     <p key={idx} className="ml-4 text-muted-foreground">{idx + 1}. {rec}</p>
                   ))}

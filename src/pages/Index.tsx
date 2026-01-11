@@ -3,11 +3,9 @@ import { HeroSection } from '@/components/landing/HeroSection';
 import { FeaturesSection } from '@/components/landing/FeaturesSection';
 import { UseCasesSection } from '@/components/landing/UseCasesSection';
 import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
-import { TestimonialsSection } from '@/components/landing/TestimonialsSection';
 import { WhyItMattersSection } from '@/components/landing/WhyItMattersSection';
-import { SecuritySection } from '@/components/landing/SecuritySection';
 import { FAQSection } from '@/components/landing/FAQSection';
-import { ImplementationSection } from '@/components/landing/ImplementationSection';
+
 import { ContactSection } from '@/components/landing/ContactSection';
 import { Footer } from '@/components/landing/Footer';
 import { useEmailAuth } from '@/hooks/useEmailAuth';
@@ -28,11 +26,8 @@ const Index = ({ onSignOut }: IndexProps) => {
         <FeaturesSection />
         <UseCasesSection />
         <HowItWorksSection />
-        <TestimonialsSection />
         <WhyItMattersSection />
-        <SecuritySection />
         <FAQSection />
-        <ImplementationSection />
         <ContactSection />
       </main>
 

@@ -25,7 +25,7 @@ const footerLinks = {
 const socialLinks = [
   { icon: <Twitter className="h-5 w-5" />, href: '#', label: 'Twitter' },
   { icon: <Linkedin className="h-5 w-5" />, href: '#', label: 'LinkedIn' },
-  { icon: <Github className="h-5 w-5" />, href: '#', label: 'GitHub' },
+  { icon: <Github className="h-5 w-5" />, href: 'https://github.com/Sumit9711/auditnova', label: 'GitHub' },
 ];
 
 export function Footer() {
@@ -55,7 +55,7 @@ export function Footer() {
             >
               <Shield className="h-8 w-8 text-primary" />
               <span className="text-xl font-bold text-foreground">
-                Anomaly<span className="text-primary">Guard</span>
+                ChitraGupt<span className="text-primary">AI</span>
               </span>
             </a>
             <p className="text-sm text-muted-foreground mb-6 max-w-xs">
