@@ -9,7 +9,6 @@ import { EmailAuthScreen } from '@/components/auth/EmailAuthScreen';
 import { LoadingScreen } from '@/components/auth/LoadingScreen';
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
-// import ModelConfig from "./pages/ModelConfig";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -66,7 +65,6 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Index onSignOut={handleSignOut} />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        {/* <Route path="/model-config" element={<ModelConfig />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

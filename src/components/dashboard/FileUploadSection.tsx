@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { ArrowRight } from 'lucide-react';
 
 interface FileUploadSectionProps {
   onFileSelect: (file: File) => void;
@@ -56,15 +57,6 @@ export function FileUploadSection({
     if (bytes < 1024) return `${bytes} B`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-  };
-
-  const getColumnTypeIcon = (type: string) => {
-    switch (type) {
-      case 'number': return '123';
-      case 'date': return '📅';
-      case 'boolean': return '✓/✗';
-      default: return 'Abc';
-    }
   };
 
   return (
@@ -191,9 +183,6 @@ export function FileUploadSection({
                       <TableHead key={idx} className="whitespace-nowrap">
                         <div className="flex flex-col">
                           <span className="font-semibold">{header}</span>
-                          <span className="text-xs text-muted-foreground font-normal">
-                            {getColumnTypeIcon(parsedData.columnTypes[header])}
-                          </span>
                         </div>
                       </TableHead>
                     ))}
@@ -238,8 +227,8 @@ export function FileUploadSection({
               "before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700"
             )}
           >
-            <span className="relative z-10 flex items-center gap-2">
-              🚀 Start Analysing
+        <span className="relative z-10 flex items-center gap-2 font-bold text-black">
+              Analyze Data
             </span>
           </Button>
         </div>
