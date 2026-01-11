@@ -189,12 +189,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                     className="pl-10 pr-10 h-12"
                     required
                   />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  <button type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 
+                            text-gray-400 hover:text-indigo-500 
+                            transition-all duration-200 
+                            hover:scale-110 active:scale-95"
                   >
-                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5 transition-transform" />
+                    ) : (
+                      <Eye className="h-5 w-5 transition-transform" />
+                    )}
                   </button>
                 </div>
 
