@@ -16,8 +16,8 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     organization: 'Ministry of Social Affairs, Government of India',
-    quote: 'AnomalyGuard detected ₹2.3 crore in welfare fraud that manual audits missed. The explainability feature helped us understand exactly where leakages were happening.',
-    fullQuote: 'AnomalyGuard detected ₹2.3 crore in welfare fraud that manual audits missed. The explainability feature helped us understand exactly where leakages were happening. Implementation took just 3 weeks. What impressed us most was the ability to drill down into specific beneficiary patterns and vendor networks. Our department now has complete visibility into disbursement flows that were previously opaque.',
+    quote: 'ChitraGuptAI detected ₹2.3 crore in welfare fraud that manual audits missed. The explainability feature helped us understand exactly where leakages were happening.',
+    fullQuote: 'ChitraGuptAI detected ₹2.3 crore in welfare fraud that manual audits missed. The explainability feature helped us understand exactly where leakages were happening. Implementation took just 3 weeks. What impressed us most was the ability to drill down into specific beneficiary patterns and vendor networks. Our department now has complete visibility into disbursement flows that were previously opaque.',
     author: 'Dr. Raj Kumar',
     role: 'Joint Secretary, Department of Social Welfare',
     metrics: ['₹2.3Cr Detected', '3-Week Rollout', '94% Accuracy'],
@@ -26,7 +26,7 @@ const testimonials: Testimonial[] = [
   {
     organization: 'State Finance Department, Karnataka',
     quote: "Our audit cycle time dropped from 3 months to 6 weeks. The dashboard's real-time alerts let us catch procurement irregularities before they escalate.",
-    fullQuote: "Our audit cycle time dropped from 3 months to 6 weeks. The dashboard's real-time alerts let us catch procurement irregularities before they escalate. Best investment in governance tech we've made. The team at AnomalyGuard worked closely with our IT cell to integrate with our existing PFMS system. Now every transaction is automatically flagged for anomalies, and our auditors can focus on investigation rather than data collection.",
+    fullQuote: "Our audit cycle time dropped from 3 months to 6 weeks. The dashboard's real-time alerts let us catch procurement irregularities before they escalate. Best investment in governance tech we've made. The team at ChitraGuptAI worked closely with our IT cell to integrate with our existing PFMS system. Now every transaction is automatically flagged for anomalies, and our auditors can focus on investigation rather than data collection.",
     author: 'Priya Sharma',
     role: 'Principal Secretary (Finance), Government of Karnataka',
     metrics: ['40% Faster Audits', '₹850L Leakages Found', 'Real-time Alerts'],
@@ -34,8 +34,8 @@ const testimonials: Testimonial[] = [
   },
   {
     organization: 'CAG Audit Office, Northern Region',
-    quote: "As auditors, we needed something that could handle India-scale datasets without slowing us down. AnomalyGuard's 99.2% accuracy and transparent methodology gives us confidence in findings.",
-    fullQuote: "As auditors, we needed something that could handle India-scale datasets without slowing us down. AnomalyGuard's 99.2% accuracy and transparent methodology gives us confidence in findings. It's becoming our standard audit tool. The explainable AI approach means we can defend every finding with solid evidence. The system processed 2.3 billion records from our central database in under 48 hours, something that would have taken our team months manually.",
+    quote: "As auditors, we needed something that could handle India-scale datasets without slowing us down. ChitraGuptAI's 99.2% accuracy and transparent methodology gives us confidence in findings.",
+    fullQuote: "As auditors, we needed something that could handle India-scale datasets without slowing us down. ChitraGuptAI's 99.2% accuracy and transparent methodology gives us confidence in findings. It's becoming our standard audit tool. The explainable AI approach means we can defend every finding with solid evidence. The system processed 2.3 billion records from our central database in under 48 hours, something that would have taken our team months manually.",
     author: 'Vikram Patel',
     role: 'Senior Audit Director, CAG Office',
     metrics: ['2.3B+ Records', '99.2% Accuracy', 'Zero False Positives'],
@@ -141,7 +141,7 @@ export function TestimonialsSection() {
             Trusted by Government Agencies Across India
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            See how AnomalyGuard is transforming governance in real implementations
+            See how ChitraGuptAI is transforming governance in real implementations
           </p>
         </div>
 

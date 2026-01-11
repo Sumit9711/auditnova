@@ -55,16 +55,16 @@ function FAQItem({ question, answer, isOpen, onToggle, index }: FAQItemProps) {
 
 const faqs = [
   {
-    question: 'Does AnomalyGuard replace human auditors?',
-    answer: 'No, AnomalyGuard is designed to augment and support auditors, not replace them. It automates the initial screening of large datasets to identify high-risk records, allowing human auditors to focus their expertise on investigating flagged cases and making final decisions.',
+    question: 'Does ChitraGuptAI replace human auditors?',
+    answer: 'No, ChitraGuptAI is designed to augment and support auditors, not replace them. It automates the initial screening of large datasets to identify high-risk records, allowing human auditors to focus their expertise on investigating flagged cases and making final decisions.',
   },
   {
-    question: 'What types of data does AnomalyGuard support?',
-    answer: 'AnomalyGuard supports any structured transactional data in CSV format. Common use cases include welfare disbursements, payroll records, procurement transactions, subsidy allocations, and scheme-wise fund flows. Custom data schemas can be configured for specific departmental needs.',
+    question: 'What types of data does ChitraGuptAI support?',
+    answer: 'ChitraGuptAI supports any structured transactional data in CSV format. Common use cases include welfare disbursements, payroll records, procurement transactions, subsidy allocations, and scheme-wise fund flows. Custom data schemas can be configured for specific departmental needs.',
   },
   {
     question: 'Can this integrate with existing government APIs and databases?',
-    answer: 'Yes, AnomalyGuard is designed for API-first integration. It can connect to existing e-governance platforms, treasury systems, and departmental databases through secure REST APIs. We also support batch data ingestion for systems without real-time API access.',
+    answer: 'Yes, ChitraGuptAI is designed for API-first integration. It can connect to existing e-governance platforms, treasury systems, and departmental databases through secure REST APIs. We also support batch data ingestion for systems without real-time API access.',
   },
   {
     question: 'How is data security and privacy handled?',
@@ -72,7 +72,7 @@ const faqs = [
   },
   {
     question: 'Can small municipalities use this, or is it only for central agencies?',
-    answer: 'AnomalyGuard is designed to scale both up and down. While it handles national-level datasets with millions of records, it\'s equally effective for state, district, or municipal-level deployments. Pricing and deployment options are tailored to organization size.',
+    answer: 'ChitraGuptAI is designed to scale both up and down. While it handles national-level datasets with millions of records, it\'s equally effective for state, district, or municipal-level deployments. Pricing and deployment options are tailored to organization size.',
   },
   {
     question: 'What kind of anomalies can the system detect?',
@@ -127,7 +127,7 @@ export function FAQSection() {
               isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Everything you need to know about implementing AnomalyGuard 
+            Everything you need to know about implementing ChitraGuptAI 
             in your organization.
           </p>
         </div>

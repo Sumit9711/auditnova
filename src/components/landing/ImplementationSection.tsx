@@ -18,7 +18,7 @@ const milestones: Milestone[] = [
   {
     id: 'onboarding',
     week: 'Week 1-2',
-    title: 'ONBOARDING & SETUP',
+    title: 'ONBOARDING',
     status: 'Setup Done',
     statusColor: 'text-accent-emerald',
     icon: CheckCircle,
@@ -33,7 +33,7 @@ const milestones: Milestone[] = [
   {
     id: 'pilot',
     week: 'Week 2-3',
-    title: 'PILOT & VALIDATION',
+    title: 'PILOT & EVALUTAION',
     status: 'Validation Complete',
     statusColor: 'text-accent-emerald',
     icon: CheckCircle,
@@ -120,7 +120,7 @@ function MilestoneCard({ milestone, index, isInView }: { milestone: Milestone; i
 
       <div
         className={cn(
-          "glass-card p-6 rounded-2xl cursor-pointer transition-all duration-300",
+          "glass-card p-4 rounded-2xl cursor-pointer transition-all duration-300",
           isExpanded && "ring-2 ring-primary/30"
         )}
         onClick={() => setIsExpanded(!isExpanded)}

@@ -10,6 +10,7 @@ interface EmailAuthScreenProps {
 
 export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
@@ -17,6 +18,11 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+  const validatePassword = (password: string) => {
+  return (
+    password.length >= 6 
+  );
+};
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +35,15 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
 
     if (!validateEmail(email)) {
       setError('Please enter a valid email address');
+      return;
+    }
+    if (!password.trim()) {
+      setError('Please enter your password');
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      setError('Password must be at least 6 characters');
       return;
     }
 
@@ -123,10 +138,10 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
             <div className="absolute inset-0 bg-primary/30 blur-xl rounded-full" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-foreground">
-              Anomaly<span className="text-primary">Guard</span>
+            <h1 className="text-3xl font-bold text-foreground pt-3">
+              ChitraGupt<span className="text-primary">AI</span>
             </h1>
-            <p className="text-sm text-muted-foreground">AI Fraud Detection Platform</p>
+            <p className="text-sm text-muted-foreground ml-3">AI Fraud Detection Platform</p>
           </div>
         </div>
 
@@ -146,12 +161,8 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
           
           <div className="relative">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-foreground mb-2">Welcome</h2>
-              <p className="text-muted-foreground">
-                Enter your email to access the dashboard
-              </p>
+              <h2 className="text-2xl font-bold text-foreground mb-2">Login </h2>
             </div>
-
             {/* Email Form */}
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="relative">
@@ -180,7 +191,28 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
                     error && "border-destructive/50 focus:border-destructive/50 focus:ring-destructive/20"
                   )}
                 />
-                
+              </div>
+              <div className="relative">
+                <Input
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setError('');
+                  }}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                  className={cn(
+                    "pl-12 pr-4 py-6 text-base rounded-xl",
+                    "bg-background/50 border-white/10",
+                    "focus:border-primary/50 focus:ring-2 focus:ring-primary/20",
+                    "placeholder:text-muted-foreground/60",
+                    "transition-all duration-300",
+                    error && "border-destructive/50 focus:border-destructive/50 focus:ring-destructive/20"
+                  )}
+                />
+
                 {/* Input glow */}
                 {isFocused && (
                   <div className="absolute inset-0 rounded-xl bg-primary/5 pointer-events-none animate-pulse" />
@@ -205,7 +237,7 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
                   "transition-all duration-300 group"
                 )}
               >
-                Continue to Dashboard
+                Login to Dashboard
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
               </Button>
             </form>
@@ -213,9 +245,7 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
             {/* Divider */}
             <div className="flex items-center gap-4 my-6">
               <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-              <span className="text-xs text-muted-foreground uppercase tracking-wider">
-                Secure Access
-              </span>
+
               <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
             </div>
 
@@ -236,13 +266,7 @@ export function EmailAuthScreen({ onSubmit }: EmailAuthScreenProps) {
             </div>
           </div>
         </div>
-
-        {/* Footer text */}
-        <p className="mt-8 text-center text-xs text-muted-foreground max-w-sm animate-fade-in">
-          Your data is protected with enterprise-grade encryption.
           <br />
-          No credit card required.
-        </p>
       </div>
 
       {/* Floating particles */}

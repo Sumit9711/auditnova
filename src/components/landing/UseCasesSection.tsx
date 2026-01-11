@@ -126,7 +126,7 @@ export function UseCasesSection() {
             )}
           >
             From welfare distribution to procurement monitoring, 
-            AnomalyGuard adapts to your governance challenges.
+            ChitraGuptAI adapts to your governance challenges.
           </p>
         </div>
 

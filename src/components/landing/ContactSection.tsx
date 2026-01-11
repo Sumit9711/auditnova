@@ -107,7 +107,7 @@ export function ContactSection() {
               </h2>
               <p className="text-muted-foreground">
                 Ready to transform your governance analytics? 
-                Let's discuss how AnomalyGuard can help your organization.
+                Let's discuss how ChitraGuptAI can help your organization.
               </p>
             </div>
 

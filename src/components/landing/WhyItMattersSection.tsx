@@ -60,7 +60,7 @@ export function WhyItMattersSection() {
               )}
             >
               Why{' '}
-              <span className="gradient-text">AnomalyGuard</span>{' '}
+              <span className="gradient-text">ChitraGuptAI</span>{' '}
               Matters
             </h2>
             <p
@@ -69,9 +69,8 @@ export function WhyItMattersSection() {
                 isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               )}
             >
-              In the age of digital governance, policy implementation generates 
-              massive data streams. AnomalyGuard transforms this data into 
-              actionable intelligence for transparent, accountable governance.
+              As governance goes digital, policy execution generates immense data.
+              ChitraGuptAI unlocks actionable insights that drive transparency and accountability.
             </p>
 
             {/* Benefits List */}
@@ -92,23 +91,6 @@ export function WhyItMattersSection() {
                 </li>
               ))}
             </ul>
-
-            {/* Alignment Tags */}
-            <div
-              className={cn(
-                "mt-8 flex flex-wrap gap-2 transition-all duration-500 delay-700",
-                isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-              )}
-            >
-              {['Digital Governance', 'AI for Social Good', 'National-Scale Analytics'].map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary border border-primary/20"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
           </div>
 
           {/* Right Column - Metrics */}

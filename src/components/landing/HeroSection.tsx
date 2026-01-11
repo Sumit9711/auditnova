@@ -131,7 +131,7 @@ export function HeroSection() {
           title="Transaction Batch"
           value="Verified ✓"
           status="normal"
-          className="bottom-[25%] right-[10%] md:right-[18%]"
+          className= "bottom-[20%] right-[3%] md:right-[5%]"
           delay={3}
         />
       </div>
@@ -170,8 +170,9 @@ export function HeroSection() {
               isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Detect anomalies in welfare, subsidies, payroll, and procurement data. 
-            Reduce leakages and increase transparency with advanced AI-powered analytics.
+            Detect anomalies in welfare, subsidies, payroll, and procurement data.
+            <br /> 
+            Reduce irregularities and increase transparency with advanced AI-powered analytics.
           </p>
 
           {/* CTAs */}
@@ -205,30 +206,11 @@ export function HeroSection() {
               }}
               className="text-base px-8 py-6 hover:bg-secondary/50 hover:border-primary/50 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
-              View Sample Insights
+              Explore Core Features
             </Button>
           </div>
-
-          {/* Trust Indicators */}
-          <div
-            className={cn(
-              "mt-16 flex flex-wrap items-center justify-center gap-8 text-muted-foreground transition-all duration-700 delay-500",
-              isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            )}
-          >
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-emerald" />
-              <span className="text-sm">Enterprise Grade Security</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-primary" />
-              <span className="text-sm">99.9% Uptime SLA</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-amber" />
-              <span className="text-sm">ISO 27001 Certified</span>
-            </div>
-          </div>
+        <br />
+        
         </div>
       </div>
 

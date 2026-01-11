@@ -146,7 +146,7 @@ export default function Dashboard() {
     
     return lines.slice(1).map(line => {
       const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
-      const record: any = {};
+      const record: Record<string, string> = {};
       headers.forEach((header, index) => {
         record[header] = values[index];
       });
@@ -323,7 +323,7 @@ export default function Dashboard() {
               <div className="h-6 w-px bg-border hidden sm:block" />
               <div className="flex items-center gap-2">
                 <Brain className="h-6 w-6 text-primary" />
-                <span className="font-bold text-lg text-foreground">AI Fraud Analysis</span>
+                <span className="font-bold text-lg text-foreground">ChitraGuptAI Analysis</span>
               </div>
             </div>
             
@@ -352,10 +352,7 @@ export default function Dashboard() {
       <main className="relative z-10 container mx-auto px-4 lg:px-8 py-8 md:py-12">
         {/* Page Header */}
         <div className="text-center mb-12 animate-fade-in">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-4 cursor-pointer hover:border-primary/50 transition-colors">
-            <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm text-muted-foreground">Powered by Machine Learning</span>
-          </div>
+
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Fraud Detection <span className="gradient-text">Dashboard</span>
           </h1>
@@ -406,6 +403,7 @@ export default function Dashboard() {
           <div
             onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
             onDragLeave={() => setIsDragOver(false)}
+            onClick={() => document.getElementById('file-input')?.click()}
             onDrop={handleDrop}
             className={cn(
               "relative border-2 border-dashed rounded-2xl p-8 md:p-12 text-center transition-all duration-300",

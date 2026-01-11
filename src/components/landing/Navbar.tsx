@@ -16,7 +16,7 @@ const navLinks = [
   { label: 'Use Cases', href: '#use-cases' },
   { label: 'How It Works', href: '#how-it-works' },
   { label: 'Security', href: '#security' },
-  { label: 'Docs', href: '#faq' },
+  { label: 'FAQs', href: '#faq' },
 ];
 
 export function Navbar({ user, onSignOut }: NavbarProps) {
@@ -72,7 +72,7 @@ export function Navbar({ user, onSignOut }: NavbarProps) {
               <div className="absolute inset-0 bg-primary/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
             <span className="text-xl font-bold text-foreground">
-              Anomaly<span className="text-primary">Guard</span>
+              ChitraGupt<span className="text-primary">AI</span>
             </span>
           </a>
 

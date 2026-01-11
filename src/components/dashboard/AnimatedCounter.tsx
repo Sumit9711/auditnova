@@ -44,7 +44,7 @@ export function AnimatedCounter({ value, duration = 2000, decimals = 0 }: Animat
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [value, duration]);
+  }, [value, duration, displayValue]);
 
   const formatNumber = (num: number) => {
     if (decimals > 0) {

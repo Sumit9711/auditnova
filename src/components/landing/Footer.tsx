@@ -5,25 +5,19 @@ const footerLinks = {
   product: [
     { label: 'Features', href: '#features' },
     { label: 'Use Cases', href: '#use-cases' },
-    { label: 'Pricing', href: '#' },
     { label: 'Roadmap', href: '#' },
   ],
   resources: [
-    { label: 'Documentation', href: '#faq' },
-    { label: 'API Reference', href: '#' },
-    { label: 'Blog', href: '#' },
+    { label: 'FAQs', href: '#faq' },
     { label: 'Case Studies', href: '#' },
   ],
   company: [
     { label: 'About', href: '#' },
     { label: 'Contact', href: '#contact' },
-    { label: 'Careers', href: '#' },
-    { label: 'Partners', href: '#' },
   ],
   legal: [
     { label: 'Privacy Policy', href: '#' },
     { label: 'Terms of Service', href: '#' },
-    { label: 'Security', href: '#' },
     { label: 'Compliance', href: '#' },
   ],
 };
@@ -170,10 +164,7 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2026 AnomalyGuard – AI for Transparent Governance
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Built with ❤️ for digital governance
+            © 2026 ChitraGuptAI – AI for Transparent Governance
           </p>
         </div>
       </div>

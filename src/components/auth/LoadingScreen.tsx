@@ -19,7 +19,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
-    let stepIndex = 0;
+    // let stepIndex = 0;
     let totalDelay = 0;
 
     const timers: NodeJS.Timeout[] = [];
@@ -103,7 +103,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
         {/* Brand name */}
         <h1 className="text-2xl font-bold text-foreground mb-12">
-          Anomaly<span className="text-primary">Guard</span>
+          ChitraGupt<span className="text-primary">AI</span>
         </h1>
 
         {/* Loading steps */}

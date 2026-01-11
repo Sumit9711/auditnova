@@ -48,7 +48,7 @@ export function AnalysisSection() {
     
     return lines.slice(1).map(line => {
       const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
-      const record: any = {};
+      const record: Record<string, string> = {};
       headers.forEach((header, index) => {
         record[header] = values[index];
       });
