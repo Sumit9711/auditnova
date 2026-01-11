@@ -170,9 +170,9 @@ export function HeroSection() {
               isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            Detect anomalies in welfare, subsidies, payroll, and procurement data.
-            <br /> 
-            Reduce irregularities and increase transparency with advanced AI-powered analytics.
+            Advanced machine learning algorithms analyze transactions in real-time.
+            <br />
+            Identifying anomalies with high transparency and accuracy.
           </p>
 
           {/* CTAs */}

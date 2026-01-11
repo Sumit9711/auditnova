@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Link, useNavigate} from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { ArrowLeft, Brain, Zap, Sun, Moon, Database, Shield, Upload, Sparkles, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,7 +18,6 @@ export default function Dashboard() {
   const { parseFile, parsedData, fileInfo, columnMapping, isLoading: isParsingFile, error: parseError, previewRows, reset: resetParser } = useFileParser();
   const { analyze, results, isAnalyzing, progress, progressStep, reset: resetAnalysis } = useFraudAnalysis();
   const [showResults, setShowResults] = useState(false);
-  const navigate = useNavigate();
 
   const handleFileSelect = useCallback(async (file: File) => {
     resetAnalysis();
