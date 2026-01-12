@@ -5,7 +5,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { EmailUser } from '@/hooks/useEmailAuth';
 import { cn } from '@/lib/utils';
 
-const STREAMLIT_APP_URL = 'https://pampl4tuaydeexnbhxsltm.streamlit.app/';
+const STREAMLIT_APP_URL = 'https://tqckpx8u7ht4vobkptcejr.streamlit.app/';
 
 interface NavbarProps {
   user: EmailUser | null;

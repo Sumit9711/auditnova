@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useInView } from '@/hooks/useInView';
 import { cn } from '@/lib/utils';
 
-const STREAMLIT_APP_URL = 'https://pampl4tuaydeexnbhxsltm.streamlit.app/';
+const STREAMLIT_APP_URL = 'https://tqckpx8u7ht4vobkptcejr.streamlit.app/';
 
 // Animated network node component
 function NetworkNode({ className, delay = 0 }: { className?: string; delay?: number }) {
