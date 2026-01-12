@@ -1,8 +1,9 @@
 import { ArrowRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useInView } from '@/hooks/useInView';
 import { cn } from '@/lib/utils';
+
+const STREAMLIT_APP_URL = 'https://pampl4tuaydeexnbhxsltm.streamlit.app/';
 
 // Animated network node component
 function NetworkNode({ className, delay = 0 }: { className?: string; delay?: number }) {
@@ -81,11 +82,9 @@ function AnomalyCard({
 
 export function HeroSection() {
   const [ref, isInView] = useInView<HTMLElement>({ threshold: 0.2 });
-  const navigate = useNavigate();
 
-
-  const goToDashboard = () => {
-    navigate('/dashboard');
+  const openStreamlitApp = () => {
+    window.open(STREAMLIT_APP_URL, '_blank');
   };
 
   return (
@@ -184,7 +183,7 @@ export function HeroSection() {
           >
             <Button
               size="lg"
-              onClick={goToDashboard}
+              onClick={openStreamlitApp}
               className={cn(
                 "text-base px-8 py-6 glow-primary transition-all duration-300 group relative overflow-hidden cursor-pointer",
                 "hover:scale-105 hover:shadow-[0_0_30px_hsl(var(--primary)/0.4)]",
