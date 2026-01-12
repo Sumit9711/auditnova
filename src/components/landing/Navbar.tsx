@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Shield, Sun, Moon, Menu, X, ChevronDown, User, LogOut } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/hooks/useTheme';
 import { EmailUser } from '@/hooks/useEmailAuth';
 import { cn } from '@/lib/utils';
+
+const STREAMLIT_APP_URL = 'https://pampl4tuaydeexnbhxsltm.streamlit.app/';
 
 interface NavbarProps {
   user: EmailUser | null;
@@ -20,7 +21,6 @@ const navLinks = [
 
 export function Navbar({ user, onSignOut }: NavbarProps) {
   const { theme, toggleTheme } = useTheme();
-  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -42,8 +42,8 @@ export function Navbar({ user, onSignOut }: NavbarProps) {
     }
   };
 
-  const goToDashboard = () => {
-    navigate('/dashboard');
+  const openStreamlitApp = () => {
+    window.open(STREAMLIT_APP_URL, '_blank');
   };
 
   return (
@@ -97,7 +97,7 @@ export function Navbar({ user, onSignOut }: NavbarProps) {
           <div className="hidden md:flex items-center gap-3">
             {/* Use AI to Analyze Button */}
             <Button
-              onClick={goToDashboard}
+              onClick={openStreamlitApp}
               variant="outline"
               size="sm"
               className={cn(
