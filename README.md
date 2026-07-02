@@ -1,4 +1,4 @@
-# 🛡️ AnomalyGuard: AI-Based Government Policy Anomaly Detection Platform
+# 🛡️ ChitraGuptAI: AI-Based Government Policy Anomaly Detection Platform
 
 **Tagline:** *Detect Fraud. Protect Public Trust. Enable Transparent Governance.*
 
