@@ -25,7 +25,7 @@
 
 ## 🎯 Project Overview
 
-**AnomalyGuard** is a scalable, AI-powered web platform designed to analyze government policy and public-sector datasets, automatically detecting anomalies, irregular patterns, and potential misuse.
+**ChitraGuptAI** is a scalable, AI-powered web platform designed to analyze government policy and public-sector datasets, automatically detecting anomalies, irregular patterns, and potential misuse.
 
 The system acts as a **decision-support tool** for analysts, auditors, and policymakers to:
 - Identify data points that deviate from expected behavior
@@ -66,7 +66,7 @@ Government policies and welfare schemes generate **massive volumes of data**:
 
 ## ✅ Solution
 
-AnomalyGuard uses **AI-driven anomaly detection** combined with an **interactive dashboard** to:
+ChitraGuptAI uses **AI-driven anomaly detection** combined with an **interactive dashboard** to:
 
 1. **Automatically analyze** structured datasets (CSV uploads)
 2. **Detect suspicious patterns** using multiple ML techniques
